@@ -6,7 +6,7 @@ using namespace std;
 
 typedef struct
 {
-    char año;
+    char año[2];
     char cod[9];
     char nombre[40];
     char facultad[MAX];
@@ -17,7 +17,7 @@ typedef struct
     char cod[9];
     char nombre[25];
     char apellido[25];
-    char edad;
+    char edad[2];
     char contacto[8];
     char departamento[MAX];
 } participante;
@@ -157,5 +157,71 @@ void deleteCareer(int pos)
 void showStudents()
 {
     system("cls");
+    if (UltReg == 0)
+    {
+        cout << "No existe un registro de este participante." << endl;
+        return;
+    }
+    for (int i = 0; i < UltReg; i++)
+    {
+        cout << "+++++++++++++++++++++++++++++++++++" << endl;
+        showStudent(i);
+    }
+    cout << "Ultimo registro de estudiante... " << endl;
+}
 
+void showCareer()
+{
+    system("cls");
+    if (UltReg == 0)
+    {
+        cout << "No existe un registro de esta carrera en el club." << endl;
+        return;
+    }
+    for (int i = 0; i < UltReg; i++)
+    {
+        cout << "+++++++++++++++++++++++++++++++++++" << endl;
+        showCareer(i);
+    }
+    cout << "Ultimo registro de carrera... " << endl;
+}
+
+void startStudent(int pos)
+{
+    strcpy(parti[pos].cod, "");
+    strcpy(parti[pos].nombre, "");
+    strcpy(parti[pos].apellido, "");
+    strcpy(parti[pos].edad, "");
+    strcpy(parti[pos].contacto, "");
+    strcpy(parti[pos].departamento, "");
+}    
+
+void startCareer(int pos)
+{
+    strcpy(carre[pos].cod, "");
+    strcpy(carre[pos].año, "");
+    strcpy(carre[pos].nombre, "");
+    strcpy(carre[pos].facultad, "");
+}
+
+int menu()
+{
+    int op;
+    cout << "       UNIVERSIDAD CENTROAMERICANA     " << endl;
+    cout << "                   UCA                 " << endl;
+    cout << "         CLUB DE GUITARRA 2023         " << endl;
+    cout << "Cantidad de estudiantes inscritos: " << endl;
+    cout << "1. Inscribir nuevo participante" << endl;
+    cout << "2. Editar registro de participante" << endl;
+    cout << "3. Eliminar participante" << endl;
+    cout << "4. Buscar datos de inscripción de participante" << endl;
+    cout << "5. Mostrar todas los participantes" << endl;
+    cout << "6. Salir del programa." << endl;
+    cin >> op;
+    return op;
+}
+
+void start()
+{
+    
 }
