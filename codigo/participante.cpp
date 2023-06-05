@@ -5,7 +5,7 @@
 using namespace std;
 #define MAX 70
 
-//ESTRUCTURAS DE DATOS PARTICIPANTE
+// ESTRUCTURAS DE DATOS PARTICIPANTE
 typedef struct
 {
     char año[2];
@@ -24,11 +24,11 @@ typedef struct
     char departamento[MAX];
 } participante;
 
+carrera carre[MAX];
 participante parti[MAX];
 int UltReg = 0;
 
-carrera carre[MAX];
-int UltReg = 0;
+
 
 // FUNCIONES CRUD
 
@@ -59,18 +59,18 @@ void deleteCareer(int pos);
 
 // FICHEROS
 FILE *registroParticipante;
-void saveStudent();
+void saveStudents();
 void readStudent();
 int calcUltReg(FILE *archivo);
 
-void saveClientes()
+void saveStudents()
 {
     registroParticipante = fopen("datosParticipante.bin", "wb");
     fwrite(parti, sizeof(participante), UltReg, registroParticipante);
     fclose(registroParticipante);
 }
 
-void readClientes()
+void readStudent()
 {
     registroParticipante = fopen("datosParticipante.bin", "rb");
     if (registroParticipante == NULL)
@@ -91,8 +91,6 @@ int calcUltReg(FILE *archivo)
     num = size / sizeof(participante);
     return num;
 }
-
-
 
 void addStudent(participante par)
 {
@@ -134,6 +132,7 @@ int isStudent(char cod[9])
             break;
         }
     }
+    return pos;
 }
 
 int isCareer(char cod[9])
@@ -147,6 +146,7 @@ int isCareer(char cod[9])
             break;
         }
     }
+    return pos;
 }
 
 participante getStudent(int pos)
@@ -189,7 +189,7 @@ void deleteCareer(int pos)
             carre[i] = carre[i + 1];
         }
         UltReg--;
-        startCareer;
+        startCareer(UltReg);
     }
 }
 
@@ -233,7 +233,7 @@ void startStudent(int pos)
     strcpy(parti[pos].edad, "");
     strcpy(parti[pos].contacto, "");
     strcpy(parti[pos].departamento, "");
-}    
+}
 
 void startCareer(int pos)
 {
@@ -251,7 +251,7 @@ int menu()
     cout << "'                   UCA                 '" << endl;
     cout << "'         CLUB DE GUITARRA 2023         '" << endl;
     cout << "'---------------------------------------'" << endl;
-    cout << "Cantidad de estudiantes inscritos: " << endl;
+    cout << "Cantidad de estudiantes inscritos: " << UltReg <<endl;
     cout << "1. Inscribir nuevo participante" << endl;
     cout << "2. Editar registro de participante" << endl;
     cout << "3. Eliminar participante" << endl;
@@ -270,7 +270,7 @@ void start()
     readStudent();
     do
     {
-        system ("cls||clear");
+        system("cls||clear");
         op = menu();
         switch (op)
         {
@@ -303,12 +303,89 @@ void start()
             addStudent(par);
             system("pause");
             break;
-        
-        case 2:
 
+        case 2:
+            system("cls||clear");
+            cout << "Escribe el codigo del participante a buscar: " << endl;
+            scanf(" %[^\n]", cod);
+            pos = isStudent(cod);
+            cout << "Datos a editar: " << endl;
+            cout << "Id del estudiante:";
+            gotoxy(10, 6);
+            cout << "Ingrese el nombre del estudiante: ";
+            gotoxy(10, 7);
+            cout << "Ingrese el apellido del estudiante: ";
+            gotoxy(10, 8);
+            cout << "Ingrese la edad del estudiante: ";
+            gotoxy(10, 9);
+            cout << "Ingrese el numero de contacto que proporciono el estudiante: ";
+            gotoxy(10, 10);
+            cout << "Ingrese el departamento de residencia del estudiante: ";
+            gotoxy(10, 11);
+            scanf(" %[^\n]", par.cod);
+            gotoxy(18, 6);
+            scanf(" %[^\n]", par.nombre);
+            gotoxy(20, 7);
+            scanf(" %[^\n]", par.apellido);
+            gotoxy(16, 8);
+            scanf(" %[^\n]", par.edad);
+            gotoxy(17, 9);
+            scanf(" %[^\n]", par.contacto);
+            gotoxy(42, 10);
+            scanf(" %[^\n]", par.departamento);
+            updateStudent(par, pos);
+            cout << "Registro de inscripción actualizado... " << endl;
+            system("pause");
+            break;
+
+        case 3:
+            system("cls||clear");
+            if (UltReg == 0)
+            {
+                cout << "No hay registro que eliminar..." << endl;
+            }
+            cout << "Escribe el Id del participante: ";
+            cin >> cod;
+            pos = isStudent(cod);
+            par = getStudent(pos);
+            cout << "Estas seguro de eliminar la inscripcion del siguiente estudiante: " << par.nombre << " " << par.apellido << "?\n";
+            cout << "Escribe 1 para SI o 2 para NO: ";
+            cin >> answ;
+            if (answ == 1)
+            {
+                deleteStudent(pos);
+                cout << "Registro Eliminado... \n";
+            }
+            else
+            {
+                cout << "Operacion cancelada.... \n";
+            }
+            system("pause");
+            break;
+
+        case 4:
+            system("cls||clear");
+            cout << "Escribe el codigo del estudiante a buscar: ";
+            scanf(" %[^\n]", cod);
+            pos = isStudent(cod);
+            showStudent(pos);
+            system("pause");
+            break;
+
+        case 5:
+            system("cls||clear");
+            showStudents();
+            system("pause");
+            break;
+
+        case 6:
+            break;
         default:
+            system("cls||clear");
+            cout << "Opcion invalida" << endl;
+            system("pause");
             break;
         }
-    } while (op !=6);
-
+    } while (op != 6);
+    saveStudents();
 }
