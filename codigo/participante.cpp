@@ -105,20 +105,27 @@ void addCareer(carrera car)
 
 void showStudent(int pos)
 {
-    cout << "Ingrese el codigo del estudiante: " << parti[pos].cod << endl;
-    cout << "Ingrese nombre: " << parti[pos].nombre << endl;
-    cout << "Ingrese apellido: " << parti[pos].apellido << endl;
-    cout << "Ingrese edad: " << parti[pos].edad << endl;
-    cout << "Ingrese numero telefonico para contacto: " << parti[pos].contacto << endl;
-    cout << "Ingrese departamento: " << parti[pos].departamento << endl;
+    gotoxy(10,2);
+    cout << "------------ Datos estudiante ------------" << endl;
+    gotoxy(10,3);
+    cout << "Codigo: " << parti[pos].cod << endl;
+    gotoxy(10,4);
+    cout << "Nombres: " << parti[pos].nombre << endl;
+    gotoxy(10,5);
+    cout << "Apellidos: " << parti[pos].apellido << endl;
+    gotoxy(10,6);
+    cout << "Edad: " << parti[pos].edad << endl;
+    gotoxy(10,7);
+    cout << "Numero de contacto: " << parti[pos].contacto << endl;
+    gotoxy(10,8);
+    cout << "Departamento: " << parti[pos].departamento << endl;
 }
 
 void showCareer(int pos)
 {
-    cout << "Ingrese el codigo del estudiante: " << carre[pos].cod << endl;
-    cout << "Ingrese el año que esta cursando" << carre[pos].año << endl;
-    cout << "Ingrese el nombre de su facultad" << carre[pos].facultad << endl;
-    cout << "Ingrese el nombre de su carrera" << carre[pos].nombre << endl;
+    cout << "Año que cursa: " << carre[pos].año << endl;
+    cout << "Facultad: " << carre[pos].facultad << endl;
+    cout << "Carrera: " << carre[pos].nombre << endl;
 }
 
 int isStudent(char cod[9])
@@ -209,7 +216,7 @@ void showStudents()
     cout << "Ultimo registro de estudiante... " << endl;
 }
 
-void showCareer()
+void showCareers()
 {
     system("cls");
     if (UltReg == 0)
@@ -255,7 +262,7 @@ int menu()
     cout << "1. Inscribir nuevo participante" << endl;
     cout << "2. Editar registro de participante" << endl;
     cout << "3. Eliminar participante" << endl;
-    cout << "4. Buscar datos de inscripción de participante" << endl;
+    cout << "4. Buscar datos de inscripcion de participante" << endl;
     cout << "5. Mostrar todas los participantes" << endl;
     cout << "6. Salir del programa." << endl;
     cin >> op;
@@ -288,17 +295,17 @@ void start()
             cout << "Ingrese el numero de contacto que proporciono el estudiante: ";
             gotoxy(10, 10);
             cout << "Ingrese el departamento de residencia del estudiante: ";
-            gotoxy(10, 11);
+            gotoxy(29, 5);
             scanf(" %[^\n]", par.cod);
-            gotoxy(18, 6);
+            gotoxy(44, 6);
             scanf(" %[^\n]", par.nombre);
-            gotoxy(20, 7);
+            gotoxy(46, 7);
             scanf(" %[^\n]", par.apellido);
-            gotoxy(16, 8);
+            gotoxy(42, 8);
             scanf(" %[^\n]", par.edad);
-            gotoxy(17, 9);
+            gotoxy(71, 9);
             scanf(" %[^\n]", par.contacto);
-            gotoxy(42, 10);
+            gotoxy(64, 10);
             scanf(" %[^\n]", par.departamento);
             addStudent(par);
             system("pause");
@@ -306,35 +313,41 @@ void start()
 
         case 2:
             system("cls||clear");
+            gotoxy(10,1);
             cout << "Escribe el codigo del participante a buscar: " << endl;
+            gotoxy(55,1);
             scanf(" %[^\n]", cod);
             pos = isStudent(cod);
-            cout << "Datos a editar: " << endl;
-            cout << "Id del estudiante:";
-            gotoxy(10, 6);
-            cout << "Ingrese el nombre del estudiante: ";
-            gotoxy(10, 7);
-            cout << "Ingrese el apellido del estudiante: ";
-            gotoxy(10, 8);
-            cout << "Ingrese la edad del estudiante: ";
-            gotoxy(10, 9);
-            cout << "Ingrese el numero de contacto que proporciono el estudiante: ";
-            gotoxy(10, 10);
-            cout << "Ingrese el departamento de residencia del estudiante: ";
+            showStudent(pos);
+            gotoxy(10,10);
+            cout << "------------ Datos a editar ------------" << endl;
             gotoxy(10, 11);
+            cout << "Id del estudiante:";
+            gotoxy(10, 12);
+            cout << "Ingrese el nombre del estudiante: ";
+            gotoxy(10, 13);
+            cout << "Ingrese el apellido del estudiante: ";
+            gotoxy(10, 14);
+            cout << "Ingrese la edad del estudiante: ";
+            gotoxy(10, 15);
+            cout << "Ingrese el numero de contacto que proporciono el estudiante: ";
+            gotoxy(10, 16);
+            cout << "Ingrese el departamento de residencia del estudiante: ";
+            gotoxy(29, 11);
             scanf(" %[^\n]", par.cod);
-            gotoxy(18, 6);
+            gotoxy(44, 12);
             scanf(" %[^\n]", par.nombre);
-            gotoxy(20, 7);
+            gotoxy(46, 13);
             scanf(" %[^\n]", par.apellido);
-            gotoxy(16, 8);
+            gotoxy(42, 14);
             scanf(" %[^\n]", par.edad);
-            gotoxy(17, 9);
+            gotoxy(71, 15);
             scanf(" %[^\n]", par.contacto);
-            gotoxy(42, 10);
+            gotoxy(64, 16);
             scanf(" %[^\n]", par.departamento);
             updateStudent(par, pos);
-            cout << "Registro de inscripción actualizado... " << endl;
+            gotoxy(10,17);
+            cout << "Registro de inscripcion actualizado... " << endl;
             system("pause");
             break;
 
