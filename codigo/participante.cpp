@@ -8,33 +8,35 @@ using namespace std;
 // ESTRUCTURAS DE DATOS PARTICIPANTE
 typedef struct
 {
-    char año[2];
-    char cod[9];
-    char nombre[40];
     char facultad[MAX];
+    char nombre[40];
+    int año;
 } carrera;
 
 typedef struct
 {
-    char cod[9];
+    char cod[10];
     char nombre[25];
     char apellido[25];
     char edad[2];
     char contacto[8];
     char departamento[MAX];
+    carrera car;
 } participante;
 
 carrera carre[MAX];
 participante parti[MAX];
 int UltReg = 0;
 
-
+char idCarrera[9];
+carrera carreraSel;
+int posCarrera;
 
 // FUNCIONES CRUD
 
 // CREATE
 void addStudent(participante par);
-void addCarrera(carrera car);
+void addCareer(carrera car);
 
 // READ
 void showStudent(int pos);
@@ -43,11 +45,11 @@ void showStudents();
 void showCareers();
 
 int isStudent(char cod[]);
-int isCareer(char cod[]);
 
 void startStudent(int pos);
 void startCareer(int pos);
 participante getStudent(int pos);
+carrera getCarrera(int pos);
 
 // UPDATE
 void updateStudent(participante par, int pos);
@@ -119,6 +121,8 @@ void showStudent(int pos)
     cout << "Numero de contacto: " << parti[pos].contacto << endl;
     gotoxy(10,8);
     cout << "Departamento: " << parti[pos].departamento << endl;
+    cout << "Carrera: " << parti[pos].car.nombre << endl;
+
 }
 
 void showCareer(int pos)
@@ -130,7 +134,7 @@ void showCareer(int pos)
 
 int isStudent(char cod[9])
 {
-    int pos = 0;
+    int pos = -1;
     for (int i = 0; i < UltReg; i++)
     {
         if (strcmp(cod, parti[i].cod) == 0)
@@ -142,24 +146,17 @@ int isStudent(char cod[9])
     return pos;
 }
 
-int isCareer(char cod[9])
-{
-    int pos = 0;
-    for (int i = 0; i < UltReg; i++)
-    {
-        if (strcmp(cod, carre[i].cod))
-        {
-            pos = i;
-            break;
-        }
-    }
-    return pos;
-}
 
 participante getStudent(int pos)
 {
     return parti[pos];
 }
+
+carrera getCarrera(int pos)
+{
+    return carre[pos];
+}
+
 
 void updateStudent(participante par, int pos)
 {
@@ -244,10 +241,10 @@ void startStudent(int pos)
 
 void startCareer(int pos)
 {
-    strcpy(carre[pos].cod, "");
-    strcpy(carre[pos].año, "");
-    strcpy(carre[pos].nombre, "");
     strcpy(carre[pos].facultad, "");
+    strcpy(carre[pos].nombre, "");
+    carre[pos].año = 0;
+
 }
 
 int menu()
@@ -265,6 +262,7 @@ int menu()
     cout << "4. Buscar datos de inscripcion de participante" << endl;
     cout << "5. Mostrar todas los participantes" << endl;
     cout << "6. Salir del programa." << endl;
+    cout << "7. Agregar carrera." << endl;
     cin >> op;
     return op;
 }
@@ -307,6 +305,14 @@ void start()
             scanf(" %[^\n]", par.contacto);
             gotoxy(64, 10);
             scanf(" %[^\n]", par.departamento);
+            cout << "Escribe el codigo de la carrera: " << endl;
+            scanf(" %[^\n]", idCarrera);
+            cout << "Ingrese la facultad de la Universidad: " << endl;
+            scanf(" %[^\n]", par.car.facultad);
+            cout << "Ingrese el nombre de la carrera: " << endl;
+            scanf(" %[^\n]", par.car.nombre);
+            cout << "Ingrese el ano que esta cursando este participante: " << endl;
+            scanf(" %[^\n]", par.car.año);
             addStudent(par);
             system("pause");
             break;
