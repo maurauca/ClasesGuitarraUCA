@@ -1,9 +1,11 @@
 #include <iostream>
+#include "cursor.h"
 #include <stdio.h>
 #include <string.h>
 using namespace std;
 #define MAX 70
 
+//ESTRUCTURAS DE DATOS PARTICIPANTE
 typedef struct
 {
     char año[2];
@@ -54,6 +56,43 @@ void updateCareer(carrera car, int pos);
 // DELETE
 void deleteStudent(int pos);
 void deleteCareer(int pos);
+
+// FICHEROS
+FILE *registroParticipante;
+void saveStudent();
+void readStudent();
+int calcUltReg(FILE *archivo);
+
+void saveClientes()
+{
+    registroParticipante = fopen("datosParticipante.bin", "wb");
+    fwrite(parti, sizeof(participante), UltReg, registroParticipante);
+    fclose(registroParticipante);
+}
+
+void readClientes()
+{
+    registroParticipante = fopen("datosParticipante.bin", "rb");
+    if (registroParticipante == NULL)
+    {
+        return;
+    }
+    UltReg = calcUltReg(registroParticipante);
+    fread(parti, sizeof(participante), MAX, registroParticipante);
+    fclose(registroParticipante);
+}
+
+int calcUltReg(FILE *archivo)
+{
+    int size, num;
+    fseek(archivo, 0, SEEK_END);
+    size = ftell(archivo);
+    rewind(archivo);
+    num = size / sizeof(participante);
+    return num;
+}
+
+
 
 void addStudent(participante par)
 {
@@ -207,9 +246,11 @@ void startCareer(int pos)
 int menu()
 {
     int op;
-    cout << "       UNIVERSIDAD CENTROAMERICANA     " << endl;
-    cout << "                   UCA                 " << endl;
-    cout << "         CLUB DE GUITARRA 2023         " << endl;
+    cout << "-----------------------------------------" << endl;
+    cout << "'       UNIVERSIDAD CENTROAMERICANA     '" << endl;
+    cout << "'                   UCA                 '" << endl;
+    cout << "'         CLUB DE GUITARRA 2023         '" << endl;
+    cout << "'---------------------------------------'" << endl;
     cout << "Cantidad de estudiantes inscritos: " << endl;
     cout << "1. Inscribir nuevo participante" << endl;
     cout << "2. Editar registro de participante" << endl;
@@ -223,5 +264,51 @@ int menu()
 
 void start()
 {
-    
+    int op, pos, answ;
+    char cod[9];
+    participante par;
+    readStudent();
+    do
+    {
+        system ("cls||clear");
+        op = menu();
+        switch (op)
+        {
+        case 1:
+            system("cls || clear");
+            gotoxy(10, 5);
+            cout << "Id del estudiante:";
+            gotoxy(10, 6);
+            cout << "Ingrese el nombre del estudiante: ";
+            gotoxy(10, 7);
+            cout << "Ingrese el apellido del estudiante: ";
+            gotoxy(10, 8);
+            cout << "Ingrese la edad del estudiante: ";
+            gotoxy(10, 9);
+            cout << "Ingrese el numero de contacto que proporciono el estudiante: ";
+            gotoxy(10, 10);
+            cout << "Ingrese el departamento de residencia del estudiante: ";
+            gotoxy(10, 11);
+            scanf(" %[^\n]", par.cod);
+            gotoxy(18, 6);
+            scanf(" %[^\n]", par.nombre);
+            gotoxy(20, 7);
+            scanf(" %[^\n]", par.apellido);
+            gotoxy(16, 8);
+            scanf(" %[^\n]", par.edad);
+            gotoxy(17, 9);
+            scanf(" %[^\n]", par.contacto);
+            gotoxy(42, 10);
+            scanf(" %[^\n]", par.departamento);
+            addStudent(par);
+            system("pause");
+            break;
+        
+        case 2:
+
+        default:
+            break;
+        }
+    } while (op !=6);
+
 }
