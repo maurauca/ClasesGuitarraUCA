@@ -5,7 +5,7 @@
 using namespace std;
 #define MAX 70
 
-// ESTRUCTURAS DE DATOS PARTICIPANTE
+// ESTRUCTURAS DE DATOS CARRERA
 typedef struct
 {
     char facultad[MAX];
@@ -13,13 +13,14 @@ typedef struct
     char año[9];
 } carrera;
 
+// ESTRUCTURAS DE DATOS PARTICIPANTE
 typedef struct
 {
     char cod[10];
     char nombre[35];
     char apellido[30];
     char edad[7];
-    char contacto[8];
+    char contacto[11];
     char departamento[MAX];
     carrera car;
 } participante;
